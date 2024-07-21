@@ -1,0 +1,67 @@
+﻿@model List<MM_Invoice_Final.Models.Dto.CustomerCarSummaryDto>
+
+
+<div class="container d-flex justify-content-between">
+    <div class="left">
+        <p>Customer ID: @Model[0].CustomerId</p>
+        <p>Customer Name: @Model[0].CustomerName</p>
+        <p>Customer Email: @Model[0].CustomerEmail</p>
+        <p>Customer #: @Model[0].CustomerNumber</p>
+    </div>
+    <div class="right">
+        <form id="deleteCustomerForm" method="post" asp-controller="CustomerCars" asp-action="DeleteCustomerById">
+            <input type="hidden" name="id" value="@Model[0].CustomerId" />
+            <a asp-controller="CustomerCars" asp-action="EditCustomer" asp-route-id="@Model[0].CustomerId" class="btn btn-primary"><i class="bi bi-pencil-square"> Details</i></a>
+            <button type="button" class="btn btn-danger" onclick="confirmDelete('@Model[0].CustomerName', '@Model[0].CustomerId')">
+                <i class="bi bi-trash"> Customer</i>
+            </button>
+        </form>
+    </div>
+</div>
+
+
+<div class="customer-car-details">
+    <div class="d-flex justify-content-end">
+        <a asp-controller="CustomerCars" asp-action="AddCarToCustomer" class="btn btn-warning" asp-route-id="@Model[0].CustomerId"><i class="bi bi-plus-circle-fill"></i> Car</a>
+    </div>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Car Rego</th>
+                <th>Car Make</th>
+                <th>Car Model</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var car in Model)
+            {
+                <tr>
+                    <td>@car.CarRego</td>
+                    <td>@car.CarMake</td>
+                    <td>@car.CarModel</td>
+                    @if (!string.IsNullOrEmpty(car.CarRego))
+                    {
+                        <td><a><i class="bi bi-pencil-square"></i></a></td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function confirmDelete(customerName, customerId) {
+        if (confirm(`Are you sure you want to remove "${customerName}" from customer list?`)) {
+            var form = document.getElementById('deleteCustomerForm');
+            form.submit();
+        } else {
+            return false; // If the user clicks "Cancel", do nothing.
+        }
+    }
+</script>
