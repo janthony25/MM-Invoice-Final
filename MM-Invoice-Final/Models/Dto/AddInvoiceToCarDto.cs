@@ -1,11 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MM_Invoice_Final.Models.Entities
+﻿namespace MM_Invoice_Final.Models.Dto
 {
-    public class tblInvoice
+    public class AddInvoiceToCarDto
     {
-        [Key]
-        public int InvoiceId { get; set; }
+        public int CustomerId { get; set; }
+        public required string CustomerName { get; set; }
+        public string? CustomerNumber { get; set; }
+        public string? CustomerEmail { get; set; }
+        public int CarId { get; set; }
+        public required string CarRego { get; set; }
+        public required string CarMake { get; set; }
+        public string? CarModel { get; set; }
         public DateTime? DateAdded { get; set; } = DateTime.Now;
         public DateTime? DueDate { get; set; }
         public required string IssueName { get; set; }
@@ -19,14 +23,5 @@ namespace MM_Invoice_Final.Models.Entities
         public decimal? AmountPaid { get; set; }
         public bool? IsPaid { get; set; }
         public string? PaymentStatus { get; set; }
-
-
-        // Foreign key to tblCar
-        public int CarId { get; set; }
-        public tblCar tblCar { get; set; }
-
-
-        // one-to-many connection to tblInvoiceItem
-        public ICollection<tblInvoiceItem> tblInvoiceItem { get; set; }
     }
 }

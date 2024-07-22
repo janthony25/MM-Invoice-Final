@@ -22,6 +22,20 @@ namespace MM_Invoice_Final.Data
                 .HasForeignKey(ca => ca.CustomerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // one-to-many tblCar-tblInvoice
+            modelBuilder.Entity<tblCar>()
+                .HasMany(ca => ca.tblInvoice)
+                .WithOne(i => i.tblCar)
+                .HasForeignKey(i => i.CarId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // one-to-many tblInvoice-tblInvoiceItem
+            modelBuilder.Entity<tblInvoice>()
+                .HasMany(i => i.tblInvoiceItem)
+                .WithOne(ii => ii.tblInvoice)
+                .HasForeignKey(ii => ii.InvoiceId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             base.OnModelCreating(modelBuilder);
         }
     }

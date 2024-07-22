@@ -43,7 +43,7 @@
                     <td>@car.CarModel</td>
                     @if (!string.IsNullOrEmpty(car.CarRego))
                     {
-                        <td><a><i class="bi bi-pencil-square"></i></a></td>
+                        <td><a asp-controller="CustomerCarInvoice" asp-action="GetCustomerCarInvoiceById" asp-route-id="@Model[0].CustomerId"><i class="bi bi-pencil-square"></i></a></td>
                     }
                     else
                     {
