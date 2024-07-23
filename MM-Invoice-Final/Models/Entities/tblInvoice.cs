@@ -13,6 +13,7 @@ namespace MM_Invoice_Final.Models.Entities
         public string? Notes { get; set; }
         public decimal? LaborPrice { get; set; }
         public decimal? Discount { get; set; }
+        //public decimal? ShippingFee { get; set; } // Newly added
         public decimal? SubTotal { get; set; }
         public decimal? TaxAmount { get; set; }
         public decimal? TotalAmount { get; set; }

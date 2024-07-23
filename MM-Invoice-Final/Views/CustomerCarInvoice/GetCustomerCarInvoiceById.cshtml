@@ -40,7 +40,7 @@
     <div class="flex-grow-1 d-flex justify-content-center">
         <h4>Transactions</h4>
     </div>
-        <a class="ms-auto btn btn-warning"><i class="bi bi-plus-circle-fill"></i> Invoice</a>
+        <a asp-controller="CustomerCarInvoice" asp-action="AddInvoiceToCar" asp-route-id="@Model[0].CarId" class="ms-auto btn btn-warning"><i class="bi bi-plus-circle-fill"></i> Invoice</a>
 </div>
 <table class="table table-striped">
     <thead>

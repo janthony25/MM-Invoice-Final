@@ -23,5 +23,8 @@
         public decimal? AmountPaid { get; set; }
         public bool? IsPaid { get; set; }
         public string? PaymentStatus { get; set; }
+
+        // Data of InvoiceITem
+        public List<AddInvoiceItemDto> AddInvoiceItem { get; set; } = new List<AddInvoiceItemDto>();
     }
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 using MM_Invoice_Final.Data;
 using MM_Invoice_Final.Models.Dto;
+using MM_Invoice_Final.Models.Entities;
 using MM_Invoice_Final.Repository.IRepository;
 
 namespace MM_Invoice_Final.Repository
@@ -11,6 +13,40 @@ namespace MM_Invoice_Final.Repository
         public CustomerCarInvoiceRepository(DataContext data)
         {
             _data = data;
+        }
+
+        public async Task AddCarInvoiceAsync(AddInvoiceToCarDto carInvoiceDto)
+        {
+            var invoice = new tblInvoice
+            {
+                DateAdded = carInvoiceDto.DateAdded ?? DateTime.Now, // Set the date if not provided
+                DueDate = carInvoiceDto.DueDate,
+                IssueName = carInvoiceDto.IssueName,
+                PaymentTerm = carInvoiceDto.PaymentTerm,
+                Notes = carInvoiceDto.Notes,
+                LaborPrice = carInvoiceDto.LaborPrice,
+                Discount = carInvoiceDto.Discount,
+                SubTotal = carInvoiceDto.SubTotal,
+                TaxAmount = carInvoiceDto.TaxAmount,
+                TotalAmount = carInvoiceDto.TotalAmount,
+                AmountPaid = carInvoiceDto.AmountPaid,
+            };
+
+            _data.tblInvoice.AddAsync(invoice);
+            await _data.SaveChangesAsync();
+
+            var invoiceItems = carInvoiceDto.AddInvoiceItem.Select(item => new tblInvoiceItem
+            {
+                ItemName = item.ItemName,
+                Quantity = item.Quantity,
+                ItemPrice = item.ItemPrice,
+                InvoiceId = invoice.InvoiceId // set the InvoiceId to link to the parent invoice
+            }).ToList();
+
+            _data.tblInvoiceItem.AddRange(invoiceItems);
+            await _data.SaveChangesAsync();
+
+            
         }
 
         public async Task<List<CustomerCarInvoiceSummaryDto>> GetCustomerCarInvoiceByIdAsync(int id)

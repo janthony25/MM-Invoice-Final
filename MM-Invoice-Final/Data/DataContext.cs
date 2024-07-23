@@ -12,6 +12,8 @@ namespace MM_Invoice_Final.Data
 
         public DbSet<tblCustomer> tblCustomer { get; set; }
         public DbSet<tblCar> tblCar { get; set; }
+        public DbSet<tblInvoice> tblInvoice { get; set; }
+        public DbSet<tblInvoiceItem> tblInvoiceItem { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
